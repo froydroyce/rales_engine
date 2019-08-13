@@ -38,6 +38,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'activerecord-import'
+  gem 'faker'
 end
 
 group :development do
