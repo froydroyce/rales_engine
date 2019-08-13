@@ -57,4 +57,51 @@ describe "Merchants API" do
     expect(response).to be_successful
     expect(merchant["data"]["id"]).to eq(merchant_4.id.to_s)
   end
+
+  it "can find multiple merchants" do
+    merchant_1 = Merchant.create!(name: "merchant 1", created_at: "2019-08-13 21:03:01 UTC")
+    merchant_2 = Merchant.create!(name: "merchant 2")
+    merchant_3 = Merchant.create!(name: "merchant 3")
+    merchant_4 = Merchant.create!(name: "merchant 4", updated_at: "2019-08-13 21:03:01 UTC")
+
+    get "/api/v1/merchants/find_all?name=#{merchant_3.name}"
+
+    merchant = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchant["data"].first["id"]).to eq(merchant_3.id.to_s)
+
+    get "/api/v1/merchants/find_all?id=#{merchant_2.id}"
+
+    merchant = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchant["data"].first["id"]).to eq(merchant_2.id.to_s)
+
+    get "/api/v1/merchants/find_all?created_at=#{merchant_1.created_at}"
+
+    merchant = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchant["data"].first["id"]).to eq(merchant_1.id.to_s)
+
+    get "/api/v1/merchants/find_all?updated_at=#{merchant_4.updated_at}"
+
+    merchant = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchant["data"].first["id"]).to eq(merchant_4.id.to_s)
+  end
+
+  it "can return a random merchant" do
+    merchant_2 = Merchant.create!(name: "merchant 2")
+    merchant_3 = Merchant.create!(name: "merchant 3")
+
+    get '/api/v1/merchants/random'
+
+    merchant = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchant["data"].first["id"]).to eq(merchant_2.id.to_s).or eq(merchant_3.id.to_s)
+  end
 end
