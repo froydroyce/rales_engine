@@ -8,4 +8,10 @@ namespace :import do
       Merchant.create!(row.to_h)
     end
   end
+
+  task item: :environment do
+    CSV.foreach('./lib/data/items.csv', headers: true) do |row|
+      Item.create!(row.to_h)
+    end
+  end
 end
