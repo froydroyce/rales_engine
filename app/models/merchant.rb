@@ -4,6 +4,14 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
   has_many :invoice_items, through: :invoices
 
+  def self.total_revenue(id)
+    select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
+      .joins(invoices: [:invoice_items, :transactions])
+      .merge(Transaction.successful)
+      .where(id: id)
+      .take
+  end
+
   def self.by_total_revenue(limit)
     select("merchants.*, SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
       .joins(invoices: [:invoice_items, :transactions])
@@ -22,11 +30,19 @@ class Merchant < ApplicationRecord
       .limit(limit)
   end
 
-  def self.revenue_for_date(date)
+  def self.total_revenue_for_date(date)
     select("SUM(invoice_items.quantity*invoice_items.unit_price) AS total_revenue")
       .joins(invoices: [:invoice_items, :transactions])
       .merge(Transaction.successful)
       .where(invoices: {created_at: date.to_date.all_day})
+      .take
+  end
+
+  def self.revenue_for_date(date, id)
+    select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
+      .joins(invoices: [:invoice_items, :transactions])
+      .merge(Transaction.successful)
+      .where(invoices: {created_at: date.to_date.all_day}, id: id)
       .take
   end
 end
