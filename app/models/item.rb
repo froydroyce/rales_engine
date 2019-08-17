@@ -20,4 +20,8 @@ class Item < ApplicationRecord
       .order("total_sold DESC")
       .limit(limit)
   end
+
+  def self.best_day(id)
+    
+  end
 end
