@@ -17,6 +17,10 @@ Rails.application.routes.draw do
         get '/:id/favorite_merchant', to: 'merchant#show'
       end
 
+      namespace :items do
+        get '/most_revenue', to: 'revenue#index'
+      end
+
       resources :merchants, only: [:index, :show]
     end
   end
