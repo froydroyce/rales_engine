@@ -3,6 +3,8 @@ class Item < ApplicationRecord
   has_many :invoice_items
   has_many :invoices, through: :invoice_items
 
+  default_scope { order(:id) }
+  
   def self.by_total_revenue(limit)
     select("items.*, SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
       .joins(invoice_items: [invoice: :transactions])
@@ -22,6 +24,6 @@ class Item < ApplicationRecord
   end
 
   def self.best_day(id)
-    
+
   end
 end
