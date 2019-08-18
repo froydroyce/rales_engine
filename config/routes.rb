@@ -26,6 +26,14 @@ Rails.application.routes.draw do
         get '/:id/best_day', to: 'date#show'
       end
 
+      namespace :invoices do
+        get '/:id/transactions', to: 'transactions#index'
+        get '/:id/invoice_items', to: 'invoice_items#index'
+        get '/:id/items', to: 'items#index'
+        get '/:id/customer', to: 'customers#index'
+        get '/:id/merchant', to: 'merchants#index'
+      end
+
       resources :merchants, only: [:index, :show]
     end
   end

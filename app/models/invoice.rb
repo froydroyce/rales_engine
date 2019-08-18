@@ -14,4 +14,10 @@ class Invoice < ApplicationRecord
       .order("revenue DESC, invoices.created_at DESC")
       .first
   end
+
+  def self.transactions(id)
+    select("transactions.*")
+      .joins(:transactions)
+      .where(transactions: {invoice_id: id})
+  end
 end
