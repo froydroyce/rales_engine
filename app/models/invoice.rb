@@ -33,4 +33,11 @@ class Invoice < ApplicationRecord
       .where(invoice_items: {invoice_id: id})
       .distinct
   end
+
+  def self.customer(id)
+    select("customers.*")
+      .joins(:customer)
+      .where(id: id)
+      .first
+  end
 end
