@@ -40,4 +40,11 @@ class Invoice < ApplicationRecord
       .where(id: id)
       .first
   end
+
+  def self.merchant(id)
+    select("merchants.*")
+      .joins(:merchant)
+      .where(id: id)
+      .first
+  end
 end
