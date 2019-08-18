@@ -56,4 +56,12 @@ class Merchant < ApplicationRecord
       .order("succ_trans DESC")
       .first
   end
+
+  def self.items(id)
+    select("items.*").joins(:items).where("items.merchant_id = #{id}")
+  end
+
+  def self.invoices(id)
+    select("invoices.*").joins(:invoices).where("invoices.merchant_id = #{id}")
+  end
 end
