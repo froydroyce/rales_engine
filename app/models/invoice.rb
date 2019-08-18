@@ -20,4 +20,17 @@ class Invoice < ApplicationRecord
       .joins(:transactions)
       .where(transactions: {invoice_id: id})
   end
+
+  def self.invoice_items(id)
+    select("invoice_items.*")
+    .joins(:invoice_items)
+    .where(invoice_items: {invoice_id: id})
+  end
+
+  def self.items(id)
+    select("items.*")
+      .joins(:invoice_items, :items)
+      .where(invoice_items: {invoice_id: id})
+      .distinct
+  end
 end
