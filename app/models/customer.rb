@@ -10,4 +10,16 @@ class Customer < ApplicationRecord
       .order("succ_trans DESC")
       .first
   end
+
+  def self.invoices(id)
+    select("invoices.*")
+      .joins(:invoices)
+      .where(invoices: {customer_id: id})
+  end
+
+  def self.transactions(id)
+    select("transactions.*")
+      .joins(invoices: :transactions)
+      .where(invoices: {customer_id: id})
+  end
 end
