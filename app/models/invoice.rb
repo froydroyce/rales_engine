@@ -8,13 +8,15 @@ class Invoice < ApplicationRecord
   default_scope { order(id: :asc) }
 
   def self.best_day(item_id)
-     select("invoices.*, SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
-      .joins(:invoice_items, :transactions)
-      .merge(Transaction.successful)
-      .where(invoice_items: {item_id: item_id})
-      .group(:id)
-      .order("revenue DESC, invoices.created_at DESC")
-      .first
+    unscoped {
+       select("invoices.*, SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
+        .joins(:invoice_items, :transactions)
+        .merge(Transaction.unscoped.successful)
+        .where(invoice_items: {item_id: item_id})
+        .group(:id)
+        .order("revenue DESC, invoices.created_at DESC")
+        .first
+    }
   end
 
   def self.transactions(id)
@@ -30,10 +32,12 @@ class Invoice < ApplicationRecord
   end
 
   def self.items(id)
-    select("items.*")
-      .joins(:invoice_items, :items)
-      .where(invoice_items: {invoice_id: id})
-      .distinct
+    unscoped {
+      select("items.*")
+        .joins(:invoice_items, :items)
+        .where(invoice_items: {invoice_id: id})
+        .distinct
+    }
   end
 
   def self.customer(id)

@@ -8,7 +8,7 @@ class Merchant < ApplicationRecord
   def self.total_revenue(id)
     select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
       .joins(invoices: [:invoice_items, :transactions])
-      .merge(Transaction.successful)
+      .merge(Transaction.unscoped.successful)
       .where(id: id)
       .take
   end
@@ -16,7 +16,7 @@ class Merchant < ApplicationRecord
   def self.by_total_revenue(limit)
     select("merchants.*, SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
       .joins(invoices: [:invoice_items, :transactions])
-      .merge(Transaction.successful)
+      .merge(Transaction.unscoped.successful)
       .group(:id)
       .order("revenue DESC")
       .limit(limit)
@@ -25,7 +25,7 @@ class Merchant < ApplicationRecord
   def self.by_items_sold(limit)
     select("merchants.*, SUM(invoice_items.quantity) AS items_sold")
       .joins(invoices: [:invoice_items, :transactions])
-      .merge(Transaction.successful)
+      .merge(Transaction.unscoped.successful)
       .group(:id)
       .order("items_sold DESC")
       .limit(limit)
@@ -34,7 +34,7 @@ class Merchant < ApplicationRecord
   def self.total_revenue_for_date(date)
     select("SUM(invoice_items.quantity*invoice_items.unit_price) AS total_revenue")
       .joins(invoices: [:invoice_items, :transactions])
-      .merge(Transaction.successful)
+      .merge(Transaction.unscoped.successful)
       .where(invoices: {created_at: date.to_date.all_day})
       .take
   end
@@ -42,7 +42,7 @@ class Merchant < ApplicationRecord
   def self.revenue_for_date(date, id)
     select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
       .joins(invoices: [:invoice_items, :transactions])
-      .merge(Transaction.successful)
+      .merge(Transaction.unscoped.successful)
       .where(invoices: {created_at: date.to_date.all_day}, id: id)
       .take
   end
@@ -50,7 +50,7 @@ class Merchant < ApplicationRecord
   def self.favorite_merchant(id)
     joins(invoices: :transactions)
       .select("merchants.*, COUNT(invoices.merchant_id) AS succ_trans")
-      .merge(Transaction.successful)
+      .merge(Transaction.unscoped.successful)
       .where(invoices: {customer_id: id})
       .group("merchants.id")
       .order("succ_trans DESC")
