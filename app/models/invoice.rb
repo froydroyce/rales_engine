@@ -5,6 +5,8 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
   has_many :transactions
 
+  default_scope { order(id: :asc) }
+
   def self.best_day(item_id)
      select("invoices.*, SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
       .joins(:invoice_items, :transactions)
