@@ -39,6 +39,7 @@ group :development, :test do
   gem 'capybara'
   gem 'activerecord-import'
   gem 'faker'
+  gem 'simplecov'
 end
 
 group :development do
