@@ -1,6 +1,6 @@
 class Api::V1::InvoiceItems::FindController < ApplicationController
   before_action :convert_price
-  
+
   def show
     render json: InvoiceItemsSerializer.new(InvoiceItem.find_by(find_params))
   end
