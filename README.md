@@ -23,7 +23,7 @@ rails import:sales_csv
 ### Exploring API Endpoints
 * In your terminal, start the rails server with `rails s`. 
 * Open a new tab in your terminal and run `rails routes` to see available endpoint URI's. 
-* In your browser, visit http://localhost:3000/ + your desired endpoint URI to retrieve exposed data.
+* In your browser, visit `http://localhost:3000/` + your desired endpoint URI to retrieve exposed data.
 
 ### Testing
 * Run `rspec` in your terminal to test models and controllers.
