@@ -23,4 +23,10 @@ rails import:task
 ### Exploring API Endpoints
 * In your terminal, start the rails server with `rails s`. 
 * Open a new tab in your terminal and run `rails routes` to see available endpoint URI's. 
-* In your browser, visit http://localhost:3000/
+* In your browser, visit http://localhost:3000/ + your desired endpoint URI to retrieve exposed data.
+
+### Testing
+* Run `rspec` in your terminal to test models and controllers.
+* A spec harness is available to test all functionality of the API [here](https://github.com/turingschool/rales_engine_spec_harness)
+
+
