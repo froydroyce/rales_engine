@@ -1,24 +1,26 @@
-# README
+# Rales Engine
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## About
+Rales Engine is Turing Back End Engineering project designed to teach the fundamentals of building an API in Rails. 
 
-Things you may want to cover:
+## Installation Requirements 
+* Ruby 2.4.1
+* Rails 5.2.3
 
-* Ruby version
+### Local Installation 
+```
+$ git clone https://github.com/froydroyce/rales_engine.git
+$ cd rales_engine
+$ bundle install
+```
 
-* System dependencies
+### Database Setup
+```
+rails db:{drop,create,migrate,seed}
+rails import:task
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Exploring API Endpoints
+* In your terminal, start the rails server with `rails s`. 
+* Open a new tab in your terminal and run `rails routes` to see available endpoint URI's. 
+* In your browser, visit http://localhost:3000/
