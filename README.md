@@ -17,7 +17,7 @@ $ bundle install
 ### Database Setup
 ```
 rails db:{drop,create,migrate,seed}
-rails import:task
+rails import:sales_csv
 ```
 
 ### Exploring API Endpoints
