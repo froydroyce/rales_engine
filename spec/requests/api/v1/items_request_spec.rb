@@ -51,7 +51,8 @@ RSpec.describe "Items API" do
     expect(response).to be_successful
     expect(item["data"]["id"]).to eq(item_2.id.to_s)
 
-    get "/api/v1/items/find?unit_price=143.00"
+    price = "%.2f" % (item_2.unit_price.to_f / 100)
+    get "/api/v1/items/find?unit_price=#{price}"
 
     item = JSON.parse(response.body)
 
